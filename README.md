@@ -28,6 +28,10 @@ Option 2 : Utiliser l'exécutable (aucune installation requise)
 
     Téléchargez l'exécutable depuis la section Releases
     Double-cliquez sur l'exécutable pour lancer l'application
+    OU  exécute cette commande : /dist/main
+    Assure-toi que le fichier est exécutable en vérifiant ses permissions : chmod +x dist/main
+
+En suivant ces étapes, tu devrais pouvoir exécuter ton script Python dans GitHub Codespaces sans problème
 
 Utilisation
 
