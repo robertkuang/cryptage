@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryptix</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="header">
+        <div class="left">
+            <span>Sécurité et Confidentialité</span>
+        </div>
+        <div class="center">
+            <img src="img/logocryptage2.png" alt="Logo Encryptix">
+        </div>
+        <div class="right">
+    <a href="connexion.html">Se connecter</a>
+    <a href="inscription.html">Inscrivez-vous gratuitement</a>
+    
+</div>
+
+    </div>
+
+    <div class="content">
+        <h1>Envoyez vos documents en toute sécurité, sans compromis.</h1>
+        <p>Sécurisez vos transferts, chiffrez vos fichiers, préservez vos données.</p>
+        <a id="main-button" class="cta-button">Chargement...</a>
+
+    </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("main-button");
+
+        // Vérifie si l'utilisateur est connecté via localStorage
+        const isLoggedIn = localStorage.getItem("loggedIn");
+
+        if (isLoggedIn === "true") {
+            button.textContent = "Aller au tableau de bord";
+            button.href = "cryptage.html"; // Redirige vers une autre page
+        } else {
+            button.textContent = "Inscrivez-vous maintenant";
+            button.href = "inscription.html"; // Sinon, vers l'inscription
+        }
+    });
+</script>
+
+</body>
+</html>

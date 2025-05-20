@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptage - Encryptix</title>
+    <link rel="stylesheet" href="css/cryptage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="header">
+        <div class="left">
+            <img src="img/logocryptage2.png" alt="Logo Encryptix">
+        </div>
+        <div class="right">
+        <a href="index2.html">Accueil</a>
+        <span class="username">Prénom</span>
+    </div>
+</div>
+
+    <main class="crypto-container">
+        <h1>Encryptix</h1>
+        <div class="card">
+            <h2>Cryptage et décryptage de fichiers</h2>
+            <p>Utilisez cette application pour sécuriser vos documents en utilisant l'algorithme de chiffrement AES-256 bits.</p>
+
+            <form>
+                <label for="file">Sélectionner un fichier :</label>
+                <input type="file" id="file" name="file"><br>
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password"><br>
+
+                <div class="button-group">
+                    <button type="button" class="btn encrypt">Crypter</button>
+                    <button type="button" class="btn decrypt">Décrypter</button>
+                </div>
+            </form>
+        </div>
+        <p class="footer-note">Encryptix utilise le chiffrement AES 256-bit pour une sécurité optimale.</p>
+    </main>
+
+    <script>
+        // Affiche le prénom de l'utilisateur connecté depuis localStorage
+        document.addEventListener("DOMContentLoaded", () => {
+            const userNameDiv = document.getElementById("user-name");
+            const firstName = localStorage.getItem("firstName") || "Utilisateur";
+            userNameDiv.textContent = firstName;
+        });
+    </script>
+</body>
+</html>

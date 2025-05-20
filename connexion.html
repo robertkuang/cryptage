@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="connexion.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html">
+    <img src="img/logo1.png" alt="Logo inscription" class="logo">
+</a>
+        <form method="post" action="/signin">
+                <h2 class="text-center">Se connecter&nbsp;&nbsp;</h2>
+                <div class="form-group"><input class="form-control" id="email" type="email" name="email" placeholder="E-mail" required></div>
+                <div class="form-group"><input class="form-control" id="password" type="password" name="password" placeholder="Mot de passe" required>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" onClick=verifierFormulaire2()>Se connecter </button>
+                    
+
+                    <div id="error-message" class="erreur-message"></div>
+        </form>
+
+        <p class="signup-text">
+    Vous n'avez pas de compte ?
+    <a href="inscription.html">Créez un compte.</a>
+</p>
+
+    </div>
+
+</body>
+</html>

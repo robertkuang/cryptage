@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('../img/fondconnexion.PNG') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* conteneur centré */
+.container {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* logo rond au-dessus */
+.logo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 10px;
+  display: block;
+  object-fit: contain;
+}
+
+/* titre */
+h2 {
+  margin-bottom: 30px;
+  color: #000;
+}
+
+/* formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* deux champs côte à côte */
+.row-2 {
+  display: flex;
+  gap: 20px;
+}
+
+.row-2 input {
+  flex: 1;
+}
+
+/* champs individuels */
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+/* bouton principal */
+button {
+  margin: 20px auto 0;
+  padding: 12px 0;
+  width: 60%;
+  font-size: 1em;
+  font-weight: bold;
+  background-color: #cbc9ff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b2b0f0;
+}

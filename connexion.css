@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('../img/fondconnexion.PNG') no-repeat center center fixed;
+    background-size: cover;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0); /* transparence totale */
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    text-align: left;
+    font-weight: bold;
+    text-transform: lowercase;
+}
+
+input {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+}
+
+button {
+    background-color: #cbc9ff;
+    color: #000;
+    border: none;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 60%;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #b2b0f0;
+}
+
+.signup-text {
+    margin-top: 20px;
+}

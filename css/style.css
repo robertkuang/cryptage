@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    font-family: 'Rajdhani', Arial, sans-serif;
+    background: url('../img/Capture.PNG') no-repeat center center fixed;
+    background-size: cover;
+    color: white; 
+    height: 100vh; /* Hauteur totale de l'écran */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centre verticalement le contenu */
+    text-align: center;
+    padding-top: 80px; /* Décale légèrement pour ne pas coller au header */
+}
+
+/* Header reste au top, hors du flux principal */
+/* Header en haut, réparti en trois zones */
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+/* Partie gauche : texte */
+.header .left span {
+    font-size: 1em;
+    font-weight: 600;
+    color: white;
+}
+
+/* Partie centrale : logo centré */
+.header .center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header .center img {
+    height: 150px;
+    width: auto;
+    margin-top: 50px;
+}
+
+/* Partie droite : liens */
+.header .right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header .right a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.header .right a:hover {
+    background-color: white;
+    color: black;
+}
+
+
+/* Centrage parfait du contenu */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(-10%); /* Décale légèrement vers le haut */
+}
+
+
+/* Taille et espacement du texte */
+.content h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+
+.content p {
+    font-size: 1.2em;
+    margin-bottom: 50px;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 600;
+    color: white;
+    background-color: #000000;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #845dc4;
+    transform: scale(1.05);
+}

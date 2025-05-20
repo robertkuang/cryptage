@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    font-family: 'Rajdhani', Arial, sans-serif;
+    background-color: #f7f7f7;
+
+}
+
+/* En-tête */
+.header {
+    color: white;
+    padding: 10px 30px; /* Hauteur réduite */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .left img {
+    height: 80px;
+    width: auto;
+}
+
+.header .right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    color: black;
+}
+
+.header .right .username {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-left: 10px;
+    color: black;
+
+}
+/* Contenu principal */
+.crypto-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.crypto-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Carte centrale */
+.card {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: left;
+}
+
+.card h2 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1em;
+    margin-bottom: 25px;
+}
+
+form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+form input[type="file"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+/* Boutons */
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.encrypt {
+    background-color: #28a745;
+    color: white;
+}
+
+.encrypt:hover {
+    background-color: #218838;
+}
+
+.decrypt {
+    background-color: #007bff;
+    color: white;
+}
+
+.decrypt:hover {
+    background-color: #0069d9;
+}
+
+/* Note en bas */
+.footer-note {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+}
