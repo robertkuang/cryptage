@@ -12,15 +12,13 @@ Installation
 Option 1 : Installation directe (nécessite Python)
 
     Clonez ce dépôt ou téléchargez-le
-    Installez les dépendances :
-
-    bash
+    Installation des dépendances : 
+    être dans un environnement virtuel pour leur installations sinon risques de ne pas lancer l'appli : être dans le dossier gitignore, où se trouve le fichier venv : "cd gitignore", puis taper cette commande "source venv/bin/activate"
 
     pip install -r requirements.txt
 
     Lancez l'application :
 
-    bash
 
     python main.py
 
