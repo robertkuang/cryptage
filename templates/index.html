@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encryptix- Application de cryptage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="file"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Encryptix</h1>
+    <div class="container">
+        <h2>Cryptage et décryptage de fichiers</h2>
+        <p>Utilisez cette application pour sécuriser vos documents en utilisant l'algorithme de chiffrement AES-256 bits.</p>
+        
+        <form action="/encrypt" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Sélectionner un fichier :</label>
+                <input type="file" id="file" name="file" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" formaction="/encrypt">Crypter</button>
+                <button type="submit" formaction="/decrypt">Décrypter</button>
+            </div>
+        </form>
+    </div>
+    
+    <footer>
+        <p>Encryptix utilise le chiffrement AES 256-bit pour une sécurité optimale.</p>
+    </footer>
+</body>
+</html>
+
+
