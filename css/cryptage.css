@@ -91,6 +91,16 @@ form input[type="password"] {
     margin-top: 20px;
 }
 
+.send {
+    background-color: #007bff; /* Bleu clair */
+    color: white;
+}
+
+.send:hover {
+    background-color: #007bff;
+}
+
+
 .btn {
     padding: 10px 20px;
     font-weight: bold;

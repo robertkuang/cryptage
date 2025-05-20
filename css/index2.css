@@ -97,8 +97,8 @@ body {
 .cta-button {
     display: inline-block;
     margin-top: 30px;
-    padding: 18px 40px;
-    font-size: 1.2em;
+    padding: 14px 30px; /* Moins large qu'avant */
+    font-size: 1.1em;
     font-weight: bold;
     color: white;
     background: linear-gradient(145deg, #5a189a, #3c096c);
@@ -107,6 +107,9 @@ body {
     border-radius: 40px;
     box-shadow: 0 4px 15px rgba(132, 93, 196, 0.4);
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    width: fit-content; /* Empêche de prendre toute la largeur */
+    max-width: 90%;     /* Sécurise sur petits écrans */
+    align-self: center; /* Centre le bouton dans son conteneur */
 }
 
 .cta-button:hover {
