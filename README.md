@@ -17,7 +17,7 @@ Option 1 : Installation directe (nécessite Python)
     python web_app.py
 
 Option 2 : Utiliser l'exécutable (aucune installation requise)
-
+    Commande : source gitignore/venv/bin/activate
     Téléchargez l'exécutable depuis la section Releases
     Double-cliquez sur l'exécutable pour lancer l'application
     OU  exécute cette commande : /dist/main
