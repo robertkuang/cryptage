@@ -1,4 +1,4 @@
-SecureCrypt
+Encryptix
 
 Une application simple et sécurisée pour crypter vos fichiers avec AES-256.
 Fonctionnalités
