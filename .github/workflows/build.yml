@@ -28,11 +28,13 @@ jobs:
       - name: Build executable
         run: pyinstaller --onefile --name Encryptix main.py
 
-      - name: List dist directory
-        run: ls -la dist/
+      - name: Check dist directory
+        run: |
+          echo "Contenu du dossier dist:"
+          ls -la dist/ || echo "Le dossier dist n'existe pas !"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v2
         with:
           name: Encryptix-${{ matrix.os }}
           path: dist/Encryptix*
