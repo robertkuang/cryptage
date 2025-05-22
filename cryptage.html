@@ -16,7 +16,6 @@
         <div class="right">
             <a href="index2.html">Accueil</a>
             <a href="index.html">Déconnexion</a>
-            <span class="username" id="user-name">Prénom</span>
         </div>
     </div>
 
@@ -33,6 +32,9 @@
 
                 <label for="password">Mot de passe :</label>
                 <input type="password" id="password" name="password" required />
+
+                <label for="email">Adresse e-mail du destinataire :</label>
+                <input type="email" id="email" name="email" required />
 
                 <div class="button-group">
                     <button type="button" class="btn encrypt" onclick="encryptFile()">Crypter</button>
@@ -103,7 +105,7 @@ def decrypt_data(encrypted_data, password):
 
         // Affiche le prénom de l'utilisateur connecté depuis localStorage
         document.addEventListener("DOMContentLoaded", () => {
-            const userNameSpan = document.getElementById("user-name");
+            const userNameSpan = document.getElementById("firstName");
             const firstName = localStorage.getItem("firstName") || "Utilisateur";
             userNameSpan.textContent = firstName;
 
@@ -203,7 +205,15 @@ decrypted_result
                 showMessage("Veuillez sélectionner un fichier", "error");
                 return;
             }
-            // Fonction d'envoi désactivée (retirée)
+
+            const email = document.getElementById("email").value.trim();
+            if (!email) {
+                showMessage("❌ Veuillez entrer une adresse e-mail", "error");
+                return;
+            }
+
+            // Ici tu peux ajouter la logique d'envoi si besoin
+            showMessage("📧 Fonction d'envoi à implémenter", "info");
         }
 
         // Utilitaires

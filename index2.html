@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Encryptix</title>
-    <link rel="stylesheet" href="css/index2.css"
+    <link rel="stylesheet" href="css/index2.css" />
     <script src="js/script.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -15,26 +15,38 @@
             <span>Sécurité et Confidentialité</span>
         </div>
         <div class="center">
-            <img src="img/logocryptage2.png" alt="Logo Encryptix">
+            <img src="img/logocryptage2.png" alt="Logo Encryptix" />
         </div>
         <div class="right">
-    <span class="username">Prénom</span>
-    <a id="logout-button" href="index.html">Déconnexion</a>
-
-</div>
-
-    
-</div>
-
+            <span class="username">Prénom</span>
+            <a id="logout-button" href="index.html">Déconnexion</a>
+        </div>
     </div>
 
     <div class="content">
         <h1>Envoyez vos documents en toute sécurité, sans compromis.</h1>
         <p>Sécurisez vos transferts, chiffrez vos fichiers, préservez vos données.</p>
         <a id="main-button" class="cta-button" href="cryptage.html">Chiffrez vos documents</a>
-
-
     </div>
-    
+
+    <script>
+        // Fonction pour récupérer le paramètre "firstName" dans l'URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Récupère le prénom dans l'URL
+        const firstName = getQueryParam('firstName');
+
+        // Met à jour le texte dans le span.username
+        if (firstName) {
+            document.querySelector('.username').innerHTML = `<strong>${firstName}</strong>`;
+
+        } else {
+            document.querySelector('.username').textContent = 'Invité';
+        }
+    </script>
+
 </body>
 </html>

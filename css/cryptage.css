@@ -83,6 +83,16 @@ form input[type="password"] {
     font-family: inherit;
 }
 
+form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+
 /* Boutons */
 .button-group {
     display: flex;

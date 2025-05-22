@@ -213,7 +213,8 @@ L’équipe Encryptix`
             return res.status(401).send('Mot de passe incorrect.');
         }
 
-        res.redirect(`/index2.html`);
+        res.redirect(`/index2.html?firstName=${encodeURIComponent(user.firstName)}`);
+
 
 
         
@@ -221,4 +222,47 @@ L’équipe Encryptix`
         console.error(error);
         return res.status(500).send('Erreur du serveur.');
     }
+});
+
+
+const multer = require('multer');
+const upload = multer(); // stockage en mémoire (buffer)
+
+app.post('/send-file', upload.single('file'), async (req, res) => {
+  try {
+    const { password, recipientEmail } = req.body;
+    const file = req.file;
+
+    if (!file || !password || !recipientEmail) {
+      return res.status(400).send('Fichier, mot de passe et email destinataire requis');
+    }
+
+    // Préparer l'email avec pièce jointe
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: recipientEmail,
+      subject: 'Votre fichier Encryptix crypté',
+      text: `Bonjour,\n\nVoici votre fichier crypté.\nLe mot de passe est : ${password}\n\nBonne journée !`,
+      attachments: [
+        {
+          filename: file.originalname,
+          content: file.buffer,
+        },
+      ],
+    };
+
+    // Envoi email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Erreur lors de l\'envoi du mail :', error);
+        return res.status(500).send('Erreur lors de l\'envoi du mail');
+      }
+      console.log('Email envoyé : ' + info.response);
+      res.send('Email envoyé avec succès');
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
+  }
 });
