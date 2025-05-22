@@ -1,0 +1,36 @@
+name: Build Encryptix - macOS
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Installer dépendances + tkinter
+        run: |
+          brew install python-tk
+          pip install .
+
+      - name: Installer PyInstaller
+        run: pip install pyinstaller
+
+      - name: Compiler l'exécutable
+        run: pyinstaller --onefile --name Encryptix main.py
+
+      - name: Uploader le binaire macOS
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/Encryptix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

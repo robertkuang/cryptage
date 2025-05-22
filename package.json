@@ -1,16 +1,16 @@
 {
   "name": "projet-chiffre-doc",
   "version": "1.0.0",
-  "main": "dev.js",
+  "main": "server-Todo-C.js",
   "scripts": {
-    "devStart": "nodemon server-Todo-C.js"
+    "start": "node server-Todo-C.js",
+    "dev": "nodemon server-Todo-C.js",
+    "check-dist": "node checkDist.js",
+    "postbuild": "npm run check-dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^3.1.10"
-  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
@@ -20,5 +20,9 @@
     "mongoose": "^7.8.7",
     "multer": "^2.0.0",
     "nodemailer": "^6.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "shelljs": "^0.8.5"
   }
 }

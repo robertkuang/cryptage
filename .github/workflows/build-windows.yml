@@ -1,0 +1,37 @@
+name: Build Encryptix - Windows
+
+on:
+  push:
+    tags:
+      - 'v*'  # Lance le build uniquement quand tu pushes un tag comme v1.0.0
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v3
+
+      - name: 🐍 Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 📦 Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: 🛠️ Installer PyInstaller
+        run: pip install pyinstaller
+
+      - name: 🏗️ Compiler l'exécutable
+        run: pyinstaller --onefile --name Encryptix main.py
+
+      - name: 🚀 Créer une release GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/Encryptix.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

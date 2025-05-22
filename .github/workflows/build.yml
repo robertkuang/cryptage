@@ -20,11 +20,44 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install PyInstaller
+      # Installer dépendances système pour tkinter sur Ubuntu/macOS
+      - name: Installer dépendances système (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y python3-tk
+
+      - name: Installer dépendances système (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install python-tk
+
+      # Installer les dépendances python via setup.py
+      - name: Installer dépendances Python
+        run: pip install --upgrade pip && pip install .
+
+      # Installer PyInstaller
+      - name: Installer PyInstaller
         run: pip install pyinstaller
 
+      # Build executable avec PyInstaller
       - name: Build executable
         run: pyinstaller --onefile --name Encryptix main.py
 
+      # Afficher contenu du dossier dist (cross-platform)
       - name: Debug dist content
-        run: ls -la dist || echo "Pas de fichier dans dist/"
+        shell: bash
+        if: runner.os != 'Windows'
+        run: |
+          if [ -d dist ]; then
+            ls -la dist
+          else
+            echo "Pas de fichier dans dist/"
+          fi
+
+      - name: Debug dist content (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (Test-Path dist) {
+            Get-ChildItem dist
+          } else {
+            Write-Host "Pas de fichier dans dist/"
+          }

@@ -1,0 +1,37 @@
+name: Build Encryptix - Linux
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Installer dépendances système
+        run: sudo apt-get update && sudo apt-get install -y python3-tk
+
+      - name: Installer dépendances Python
+        run: pip install .
+
+      - name: Installer PyInstaller
+        run: pip install pyinstaller
+
+      - name: Compiler l'exécutable
+        run: pyinstaller --onefile --name Encryptix main.py
+
+      - name: Uploader le binaire Linux
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/Encryptix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
