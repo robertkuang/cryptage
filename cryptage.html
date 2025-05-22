@@ -37,8 +37,8 @@
                 <input type="email" id="email" name="email" required />
 
                 <div class="button-group">
-                    <button type="button" class="btn encrypt" onclick="encryptFile()">Crypter</button>
-                    <button type="button" class="btn decrypt" onclick="decryptFile()">Décrypter</button>
+                    <button type="button" class="btn encrypt" onclick="encryptFile()" disabled>Crypter</button>
+                    <button type="button" class="btn decrypt" onclick="decryptFile()" disabled>Décrypter</button>
                     <button type="button" class="btn send" onclick="sendFile()">Envoyer</button>
                 </div>
             </form>
@@ -54,6 +54,7 @@
 
     <script>
         let pyodide;
+        let pyodideReady = false;
         let selectedFile = null;
 
         // Initialiser Pyodide
@@ -91,7 +92,7 @@ def decrypt_data(encrypted_data, password):
         decrypted = cipher.decrypt(encrypted)
         pad_len = decrypted[-1]
         if pad_len < 1 or pad_len > AES.block_size:
-            return "Erreur de décryptage: padding invalide (mot de passe incorrect ?) "
+            return "Erreur de décryptage: padding invalide (mot de passe incorrect ?)"
         if decrypted[-pad_len:] != bytes([pad_len]) * pad_len:
             return "Erreur de décryptage: padding invalide (mot de passe incorrect ?)"
         decrypted = decrypted[:-pad_len]
@@ -100,6 +101,11 @@ def decrypt_data(encrypted_data, password):
         return f"Erreur de décryptage: {str(e)}"
             `);
 
+            pyodideReady = true;
+            // Activer les boutons une fois prêt
+            document.querySelector(".btn.encrypt").disabled = false;
+            document.querySelector(".btn.decrypt").disabled = false;
+
             console.log("Pyodide initialisé avec succès");
         }
 
@@ -107,7 +113,7 @@ def decrypt_data(encrypted_data, password):
         document.addEventListener("DOMContentLoaded", () => {
             const userNameSpan = document.getElementById("firstName");
             const firstName = localStorage.getItem("firstName") || "Utilisateur";
-            userNameSpan.textContent = firstName;
+            if(userNameSpan) userNameSpan.textContent = firstName;
 
             initPyodide();
         });
@@ -124,6 +130,10 @@ def decrypt_data(encrypted_data, password):
         });
 
         async function encryptFile() {
+            if (!pyodideReady) {
+                showMessage("Pyodide n'est pas encore prêt, veuillez patienter...", "error");
+                return;
+            }
             if (!selectedFile) {
                 showMessage("Veuillez sélectionner un fichier", "error");
                 return;
@@ -161,6 +171,10 @@ encrypted_result
         }
 
         async function decryptFile() {
+            if (!pyodideReady) {
+                showMessage("Pyodide n'est pas encore prêt, veuillez patienter...", "error");
+                return;
+            }
             if (!selectedFile) {
                 showMessage("Veuillez sélectionner un fichier crypté", "error");
                 return;
