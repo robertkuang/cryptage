@@ -1,11 +1,9 @@
-name: Build & Publish Encryptix
+name: Build & Debug Encryptix
 
 on:
   push:
     branches:
       - master
-    tags:
-      - 'v*.*.*'
 
 jobs:
   build:
@@ -28,13 +26,5 @@ jobs:
       - name: Build executable
         run: pyinstaller --onefile --name Encryptix main.py
 
-      - name: Check dist directory
-        run: |
-          echo "Contenu du dossier dist:"
-          ls -la dist/ || echo "Le dossier dist n'existe pas !"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Encryptix-${{ matrix.os }}
-          path: dist/Encryptix*
+      - name: Debug dist content
+        run: ls -la dist || echo "Pas de fichier dans dist/"
