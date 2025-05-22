@@ -10,7 +10,7 @@ Fonctionnalités
 
 
 
-    Clonez ce dépôt ou téléchargez-le
+    Clonez ce dépôt : git clone https://github.com/robertkuang/cryptage.git
 
     Lancez l'application : 
     npm run devStart
