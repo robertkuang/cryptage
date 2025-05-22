@@ -154,11 +154,23 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Redirection vers la page d'inscription réussie
   const mailOptions = {
-      from: 'ous93600@gmail.com',
-      to: email,
-      subject: 'Confirmation d\'inscription',
-      text: `Bonjour ${firstName},\n\nMerci pour votre inscription sur notre site !\n\nCordialement,\nL'équipe SpaceX`
-  };
+    from: 'encryptix4@gmail.com',
+    to: email,
+    subject: 'Bienvenue sur Encryptix – Protégez vos documents en toute sécurité',
+    text: `Bonjour ${firstName},\n\nMerci de vous être inscrit sur Encryptix !
+
+Vous avez maintenant accès à une solution simple, rapide et sécurisée pour chiffrer et protéger tous vos documents sensibles.
+
+🔐 Ce que vous pouvez faire dès maintenant :
+- Chiffrer vos documents en quelques clics
+- Stocker et partager en toute sécurité
+- Garder le contrôle total sur vos données
+
+Si vous avez la moindre question ou besoin d'aide, notre équipe est là pour vous accompagner.
+
+Encore bienvenue,
+L’équipe Encryptix`
+};
 
   transporter.sendMail(mailOptions, (error, info) => {
     console.log(`Tentative d'envoi de mail à : ${email}`);

@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cryptage - Encryptix</title>
-    <link rel="stylesheet" href="css/cryptage.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/cryptage.css" />
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
 </head>
 <body>
 
     <div class="header">
         <div class="left">
-            <img src="img/logocryptage2.png" alt="Logo Encryptix">
+            <img src="img/logocryptage2.png" alt="Logo Encryptix" />
         </div>
         <div class="right">
-        <a href="index2.html">Accueil</a>
-        <span class="username">Prénom</span>
+            <a href="index2.html">Accueil</a>
+            <a href="index.html">Déconnexion</a>
+            <span class="username" id="user-name">Prénom</span>
+        </div>
     </div>
-</div>
 
     <main class="crypto-container">
         <h1>Encryptix</h1>
@@ -25,30 +26,236 @@
             <h2>Cryptage et décryptage de fichiers</h2>
             <p>Utilisez cette application pour sécuriser vos documents en utilisant l'algorithme de chiffrement AES-256 bits.</p>
 
-            <form>
+            <form id="cryptoForm">
                 <label for="file">Sélectionner un fichier :</label>
-                <input type="file" id="file" name="file"><br>
+                <input type="file" id="file" name="file" required />
+                <div class="file-info" id="file-info"></div>
 
                 <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password"><br>
+                <input type="password" id="password" name="password" required />
 
                 <div class="button-group">
-                    <button type="button" class="btn encrypt">Crypter</button>
-                    <button type="button" class="btn decrypt">Décrypter</button>
-                    <button type="submit" class="btn send">Envoyer</button>
+                    <button type="button" class="btn encrypt" onclick="encryptFile()">Crypter</button>
+                    <button type="button" class="btn decrypt" onclick="decryptFile()">Décrypter</button>
+                    <button type="button" class="btn send" onclick="sendFile()">Envoyer</button>
                 </div>
             </form>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div>Traitement en cours...</div>
+            </div>
+
+            <div class="message" id="message" style="display: none;"></div>
         </div>
         <p class="footer-note">Encryptix utilise le chiffrement AES 256-bit pour une sécurité optimale.</p>
     </main>
 
     <script>
+        let pyodide;
+        let selectedFile = null;
+
+        // Initialiser Pyodide
+        async function initPyodide() {
+            pyodide = await loadPyodide();
+            await pyodide.loadPackage("pycryptodome");
+
+            pyodide.runPython(`
+import base64
+import hashlib
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+import js
+
+def encrypt_data(data, password):
+    try:
+        key = hashlib.sha256(password.encode()).digest()
+        iv = get_random_bytes(AES.block_size)
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        pad_len = AES.block_size - len(data) % AES.block_size
+        padded_data = data + bytes([pad_len]) * pad_len
+        encrypted = cipher.encrypt(padded_data)
+        result = base64.b64encode(iv + encrypted).decode('utf-8')
+        return result
+    except Exception as e:
+        return f"Erreur de cryptage: {str(e)}"
+
+def decrypt_data(encrypted_data, password):
+    try:
+        data = base64.b64decode(encrypted_data.encode('utf-8'))
+        iv = data[:AES.block_size]
+        encrypted = data[AES.block_size:]
+        key = hashlib.sha256(password.encode()).digest()
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        decrypted = cipher.decrypt(encrypted)
+        pad_len = decrypted[-1]
+        if pad_len < 1 or pad_len > AES.block_size:
+            return "Erreur de décryptage: padding invalide (mot de passe incorrect ?) "
+        if decrypted[-pad_len:] != bytes([pad_len]) * pad_len:
+            return "Erreur de décryptage: padding invalide (mot de passe incorrect ?)"
+        decrypted = decrypted[:-pad_len]
+        return decrypted
+    except Exception as e:
+        return f"Erreur de décryptage: {str(e)}"
+            `);
+
+            console.log("Pyodide initialisé avec succès");
+        }
+
         // Affiche le prénom de l'utilisateur connecté depuis localStorage
         document.addEventListener("DOMContentLoaded", () => {
-            const userNameDiv = document.getElementById("user-name");
+            const userNameSpan = document.getElementById("user-name");
             const firstName = localStorage.getItem("firstName") || "Utilisateur";
-            userNameDiv.textContent = firstName;
+            userNameSpan.textContent = firstName;
+
+            initPyodide();
         });
+
+        document.getElementById("file").addEventListener("change", function (e) {
+            selectedFile = e.target.files[0];
+            const fileInfo = document.getElementById("file-info");
+
+            if (selectedFile) {
+                fileInfo.textContent = `Fichier sélectionné: ${selectedFile.name} (${formatFileSize(selectedFile.size)})`;
+            } else {
+                fileInfo.textContent = "";
+            }
+        });
+
+        async function encryptFile() {
+            if (!selectedFile) {
+                showMessage("Veuillez sélectionner un fichier", "error");
+                return;
+            }
+            const password = document.getElementById("password").value;
+            if (!password) {
+                showMessage("Veuillez entrer un mot de passe", "error");
+                return;
+            }
+            showLoading(true);
+            setButtonsDisabled(true);
+            try {
+                const arrayBuffer = await selectedFile.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+
+                pyodide.globals.set("file_data", uint8Array);
+                pyodide.globals.set("password", password);
+
+                const result = pyodide.runPython(`
+encrypted_result = encrypt_data(bytes(file_data), password)
+encrypted_result
+                `);
+
+                if (result.startsWith("Erreur")) {
+                    showMessage(`❌ ${result}`, "error");
+                } else {
+                    showMessage("✅ Fichier crypté avec succès!", "success");
+                    downloadFile(result, selectedFile.name + ".encrypted", "text/plain");
+                }
+            } catch (error) {
+                showMessage(`❌ Erreur: ${error.message}`, "error");
+            }
+            showLoading(false);
+            setButtonsDisabled(false);
+        }
+
+        async function decryptFile() {
+            if (!selectedFile) {
+                showMessage("Veuillez sélectionner un fichier crypté", "error");
+                return;
+            }
+            const password = document.getElementById("password").value;
+            if (!password) {
+                showMessage("Veuillez entrer le mot de passe", "error");
+                return;
+            }
+            showLoading(true);
+            setButtonsDisabled(true);
+            try {
+                const text = await selectedFile.text();
+                pyodide.globals.set("encrypted_data", text);
+                pyodide.globals.set("password", password);
+
+                const pythonCode = `
+decrypted_result = decrypt_data(encrypted_data, password)
+if isinstance(decrypted_result, bytes):
+    decrypted_result = decrypted_result.decode('utf-8', errors='ignore')
+decrypted_result
+                `;
+
+                const result = pyodide.runPython(pythonCode);
+
+                if (result.startsWith("Erreur")) {
+                    showMessage(`❌ ${result}`, "error");
+                } else {
+                    showMessage("✅ Fichier décrypté avec succès!", "success");
+                    const originalName = selectedFile.name.replace(".encrypted", "");
+                    downloadFile(result, originalName + ".decrypted.txt", "text/plain");
+                }
+            } catch (error) {
+                showMessage(`❌ Erreur: ${error.message}`, "error");
+            }
+            showLoading(false);
+            setButtonsDisabled(false);
+        }
+
+        function sendFile() {
+            if (!selectedFile) {
+                showMessage("Veuillez sélectionner un fichier", "error");
+                return;
+            }
+            // Fonction d'envoi désactivée (retirée)
+        }
+
+        // Utilitaires
+
+        function showLoading(show) {
+            document.getElementById("loading").style.display = show ? "block" : "none";
+        }
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById("message");
+            messageDiv.textContent = text;
+            messageDiv.style.display = "block";
+
+            if (type === "success") {
+                messageDiv.style.color = "green";
+            } else if (type === "error") {
+                messageDiv.style.color = "red";
+            } else {
+                messageDiv.style.color = "blue";
+            }
+
+            setTimeout(() => {
+                messageDiv.style.display = "none";
+            }, 5000);
+        }
+
+        function setButtonsDisabled(disabled) {
+            const buttons = document.querySelectorAll(".btn");
+            buttons.forEach((btn) => {
+                btn.disabled = disabled;
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return "0 Bytes";
+            const k = 1024;
+            const sizes = ["Bytes", "KB", "MB", "GB"];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     </script>
 </body>
 </html>
